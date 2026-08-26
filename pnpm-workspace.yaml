@@ -1,0 +1,14 @@
+packages:
+  - apps/*
+  - packages/*
+
+nodeLinker: hoisted
+strictPeerDependencies: false
+
+# Electron Forge 7 pulls @electron/node-gyp from git. Drop this on Forge 8.
+blockExoticSubdeps: false
+
+allowBuilds:
+  electron: true
+  electron-winstaller: true
+  esbuild: true
