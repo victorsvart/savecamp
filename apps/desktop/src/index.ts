@@ -1,8 +1,10 @@
+import "dotenv/config";
 import type { AppId } from "@savecamp/types";
 import { app, BrowserWindow, ipcMain } from "electron";
 import fs from "node:fs";
 import path from "node:path";
 import { detectGame } from "./functions/detect-game";
+import { saveGameStateToCloud } from "./functions/save-game";
 
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -29,8 +31,8 @@ const createWindow = (): void => {
   }
 
   const mainWindow = new BrowserWindow({
-    height: 600,
-    width: 800,
+    height: 680,
+    width: 960,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
       contextIsolation: true,
@@ -45,6 +47,13 @@ const createWindow = (): void => {
 ipcMain.handle("detect-game", (_event, game: string) => {
   return detectGame(game);
 });
+
+ipcMain.handle(
+  "save-game-state",
+  async (_event, gameName: string, basePath: string, saveFilePath: string) => {
+    return saveGameStateToCloud(gameName, basePath, saveFilePath);
+  }
+);
 
 app.on("ready", createWindow);
 

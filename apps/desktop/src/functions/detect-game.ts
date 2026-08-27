@@ -8,6 +8,7 @@ export function detectGame(game: string): GameSearchResult {
     default:
       console.log(`Tried to detect unsupported game: ${game}`);
       return {
+        basePath: "",
         paths: [],
         error: new Error(`Tried to detect unsupported game: ${game}`),
       };

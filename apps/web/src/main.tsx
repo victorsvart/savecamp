@@ -3,12 +3,12 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, HashRouter, Route, Routes } from "react-router";
 
 import "./index.css";
-import App from "./App.tsx";
+import RootRedirect from "./App.tsx";
 import { ThemeProvider } from "@/components/theme-provider.tsx";
-import { MinecraftDetection } from "./routes/home/minecraft/MinecraftDetection.tsx";
+import { AppLayout } from "@/layouts/AppLayout.tsx";
 import { Home } from "./routes/home/Home.tsx";
+import { DetectionPage } from "./routes/home/DetectionPage.tsx";
 import { NotFound } from "./routes/not-found/NotFound.tsx";
-import { BigWalkDetection } from "./routes/home/bigwalk/BigWalkDetection.tsx";
 import { TooltipProvider } from "./components/ui/tooltip.tsx";
 import { Toaster } from "./components/ui/toast.tsx";
 
@@ -22,17 +22,15 @@ createRoot(document.getElementById("root")!).render(
         <Toaster>
           <Router>
             <Routes>
-              <Route path="/" element={<App />} />
-              <Route path="/home" element={<Home />} />
-              <Route
-                path="/home/minecraft/detection"
-                element={<MinecraftDetection />}
-              />
-              <Route
-                path="/home/bigwalk/detection"
-                element={<BigWalkDetection />}
-              />
-              <Route path="*" element={<NotFound />} />
+              <Route path="/" element={<RootRedirect />} />
+              <Route element={<AppLayout />}>
+                <Route path="/home" element={<Home />} />
+                <Route
+                  path="/home/:gameSlug/detection"
+                  element={<DetectionPage />}
+                />
+                <Route path="*" element={<NotFound />} />
+              </Route>
             </Routes>
           </Router>
         </Toaster>

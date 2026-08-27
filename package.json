@@ -2,9 +2,10 @@
   "name": "savecamp",
   "private": true,
   "scripts": {
-    "dev": "pnpm --filter @savecamp/web build && pnpm --filter @savecamp/desktop dev",
+    "dev": "pnpm --filter @savecamp/web build && pnpm --parallel --filter @savecamp/api --filter @savecamp/desktop dev",
     "dev:web": "pnpm --filter @savecamp/web dev",
     "dev:desktop": "pnpm --filter @savecamp/desktop dev",
+    "dev:api": "pnpm --filter @savecamp/api dev",
     "build": "pnpm --filter @savecamp/web build",
     "package": "pnpm --filter @savecamp/web build && pnpm --filter @savecamp/desktop package",
     "make": "pnpm --filter @savecamp/web build && pnpm --filter @savecamp/desktop make",

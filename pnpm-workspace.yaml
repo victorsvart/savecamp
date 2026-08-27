@@ -12,3 +12,6 @@ allowBuilds:
   electron: true
   electron-winstaller: true
   esbuild: true
+
+minimumReleaseAgeExclude:
+  - hono@4.13.5

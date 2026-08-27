@@ -24,7 +24,6 @@ const win32ExpectedPath = path.join(
   "save_games"
 );
 
-
 export function detectBigWalk(): GameSearchResult {
   switch (process.platform) {
     case "darwin":
@@ -33,6 +32,7 @@ export function detectBigWalk(): GameSearchResult {
       return searchGame(win32ExpectedPath, SAVE_FILE_EXTENSION);
     default:
       return {
+        basePath: "",
         paths: [],
         error: new Error(`${GAME_NAME} not supported on ${process.platform}`),
       };

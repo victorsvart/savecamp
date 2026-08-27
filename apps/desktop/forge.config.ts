@@ -28,8 +28,9 @@ const config: ForgeConfig = {
     new AutoUnpackNativesPlugin({}),
     new WebpackPlugin({
       mainConfig,
-      // The UI is the Vite build (`loadFile`). Keep webpack-dev-server from
-      // injecting its client into the sandboxed preload bundle.
+      // webpack-dev-server (preload). loggerPort defaults to 9000 — do not reuse it.
+      port: 9001,
+      loggerPort: 9000,
       devServer: {
         hot: false,
         liveReload: false,

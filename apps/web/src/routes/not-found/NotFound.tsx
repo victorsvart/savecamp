@@ -5,11 +5,16 @@ export function NotFound() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center gap-2">
-      <h1 className="text-2xl font-bold">Página não encontrada</h1>
-      <p>Esta rota não existe.</p>
-      <Button onClick={() => navigate("/")}>
-        Voltar para a página inicial
+    <div className="mx-auto flex w-full max-w-md flex-col gap-3 border px-3 py-4 text-sm">
+      <p className="font-medium">Página não encontrada</p>
+      <p className="text-muted-foreground">Esta rota não existe no SaveCamp.</p>
+      <Button
+        variant="outline"
+        size="sm"
+        className="w-fit"
+        onClick={() => navigate("/home")}
+      >
+        Ir para início
       </Button>
     </div>
   );

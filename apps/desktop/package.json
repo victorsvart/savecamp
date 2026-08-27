@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@savecamp/types": "workspace:*",
+    "dotenv": "^17.2.3",
     "electron-squirrel-startup": "^1.0.1"
   }
 }

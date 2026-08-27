@@ -1,7 +1,10 @@
 import { GameSearchResult } from "@savecamp/types/src";
 import fs from "node:fs";
 
-export function searchGame(expectedPath: string, extension: string): GameSearchResult {
+export function searchGame(
+  expectedPath: string,
+  extension: string
+): GameSearchResult {
   console.log(`Searching for game at: ${expectedPath}`);
   try {
     if (!fs.existsSync(expectedPath)) {
@@ -13,13 +16,17 @@ export function searchGame(expectedPath: string, extension: string): GameSearchR
     console.log(
       `User data path found at ${expectedPath} on ${process.platform}`
     );
-    const saveStates = fs.readdirSync(expectedPath).filter((file) => file.endsWith(extension));
+    const saveStates = fs
+      .readdirSync(expectedPath)
+      .filter((file) => file.endsWith(extension));
     return {
+      basePath: expectedPath,
       paths: saveStates,
       error: null,
     };
   } catch (error) {
     return {
+      basePath: expectedPath,
       paths: [],
       error: error as Error,
     };
