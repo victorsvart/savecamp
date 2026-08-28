@@ -12,6 +12,8 @@ allowBuilds:
   electron: true
   electron-winstaller: true
   esbuild: true
+  msgpackr-extract: true
+  workerd: true
 
 minimumReleaseAgeExclude:
   - hono@4.13.5

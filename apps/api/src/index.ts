@@ -11,7 +11,7 @@ export const APP_ID: AppId = "api";
 const app = new Hono();
 
 app.get("/", (c) => {
-  return c.text("Hello Hono!");
+  return c.json({ message: "hello from savecamp api" });
 });
 
 app.use(
