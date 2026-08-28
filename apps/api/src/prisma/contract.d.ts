@@ -33,9 +33,9 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'3376a695a360a5c62a1047c30ccb886d5f5df9b395dc6e4a5af05f7b5072d515'>;
+  StorageHashBase<'8dd3da8c39331e4b721af44c8995ec91a0bbcb06e0a82c2aa640b57ba4dff1cb'>;
 export type ExecutionHash =
-  ExecutionHashBase<'37b08bc51292e9cfdbe3868e109b2146b34edf305c748cca61fc1d4c2f094129'>;
+  ExecutionHashBase<'0398a32fc2b50b51fce4694636081076f2c7b98fed08742f70f1e59b7af1085a'>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
 
@@ -245,7 +245,14 @@ export type FieldOutputTypes = {
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly name: CodecTypes['pg/text@1']['output'];
       readonly gameId: CodecTypes['pg/text@1']['output'];
-      readonly userId: CodecTypes['pg/text@1']['output'];
+      readonly creatorId: CodecTypes['pg/text@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
+    };
+    readonly CampMember: {
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly campId: CodecTypes['pg/text@1']['output'];
+      readonly memberId: CodecTypes['pg/text@1']['output'];
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
     };
@@ -254,8 +261,22 @@ export type FieldOutputTypes = {
       readonly name: CodecTypes['pg/text@1']['output'];
       readonly logoURL: CodecTypes['pg/text@1']['output'];
       readonly active: CodecTypes['pg/bool@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
     };
-    readonly User: { readonly id: CodecTypes['pg/text@1']['output'] };
+    readonly GameCampSave: {
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly campId: CodecTypes['pg/text@1']['output'];
+      readonly data: CodecTypes['pg/json@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
+    };
+    readonly User: {
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly active: CodecTypes['pg/bool@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
+    };
   };
 };
 export type FieldInputTypes = {
@@ -264,7 +285,14 @@ export type FieldInputTypes = {
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly name: CodecTypes['pg/text@1']['input'];
       readonly gameId: CodecTypes['pg/text@1']['input'];
-      readonly userId: CodecTypes['pg/text@1']['input'];
+      readonly creatorId: CodecTypes['pg/text@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
+    };
+    readonly CampMember: {
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly campId: CodecTypes['pg/text@1']['input'];
+      readonly memberId: CodecTypes['pg/text@1']['input'];
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
     };
@@ -273,46 +301,102 @@ export type FieldInputTypes = {
       readonly name: CodecTypes['pg/text@1']['input'];
       readonly logoURL: CodecTypes['pg/text@1']['input'];
       readonly active: CodecTypes['pg/bool@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
     };
-    readonly User: { readonly id: CodecTypes['pg/text@1']['input'] };
+    readonly GameCampSave: {
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly campId: CodecTypes['pg/text@1']['input'];
+      readonly data: CodecTypes['pg/json@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
+    };
+    readonly User: {
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly active: CodecTypes['pg/bool@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
+    };
   };
 };
 export type StorageColumnTypes = {
   readonly public: {
-    readonly camp: {
+    readonly camp_members: {
+      readonly campId: CodecTypes['pg/text@1']['output'];
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly memberId: CodecTypes['pg/text@1']['output'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
+    };
+    readonly camps: {
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
+      readonly creatorId: CodecTypes['pg/text@1']['output'];
       readonly gameId: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly name: CodecTypes['pg/text@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
-      readonly userId: CodecTypes['pg/text@1']['output'];
     };
-    readonly game: {
+    readonly game_camp_saves: {
+      readonly campId: CodecTypes['pg/text@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
+      readonly data: CodecTypes['pg/json@1']['output'];
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
+    };
+    readonly games: {
       readonly active: CodecTypes['pg/bool@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly id: CodecTypes['pg/text@1']['output'];
       readonly logoURL: CodecTypes['pg/text@1']['output'];
       readonly name: CodecTypes['pg/text@1']['output'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
     };
-    readonly user: { readonly id: CodecTypes['pg/text@1']['output'] };
+    readonly users: {
+      readonly active: CodecTypes['pg/bool@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
+    };
   };
 };
 export type StorageColumnInputTypes = {
   readonly public: {
-    readonly camp: {
+    readonly camp_members: {
+      readonly campId: CodecTypes['pg/text@1']['input'];
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly memberId: CodecTypes['pg/text@1']['input'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
+    };
+    readonly camps: {
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
+      readonly creatorId: CodecTypes['pg/text@1']['input'];
       readonly gameId: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly name: CodecTypes['pg/text@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
-      readonly userId: CodecTypes['pg/text@1']['input'];
     };
-    readonly game: {
+    readonly game_camp_saves: {
+      readonly campId: CodecTypes['pg/text@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
+      readonly data: CodecTypes['pg/json@1']['input'];
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
+    };
+    readonly games: {
       readonly active: CodecTypes['pg/bool@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly id: CodecTypes['pg/text@1']['input'];
       readonly logoURL: CodecTypes['pg/text@1']['input'];
       readonly name: CodecTypes['pg/text@1']['input'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
     };
-    readonly user: { readonly id: CodecTypes['pg/text@1']['input'] };
+    readonly users: {
+      readonly active: CodecTypes['pg/bool@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly updatedAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
+    };
   };
 };
 export type TypeMaps = TypeMapsType<
@@ -333,24 +417,19 @@ type ContractBase = Omit<
         readonly kind: 'postgres-schema';
         readonly entries: {
           readonly table: {
-            readonly camp: {
+            readonly camp_members: {
               columns: {
                 readonly id: {
                   readonly nativeType: 'text';
                   readonly codecId: 'pg/text@1';
                   readonly nullable: false;
                 };
-                readonly name: {
+                readonly campId: {
                   readonly nativeType: 'text';
                   readonly codecId: 'pg/text@1';
                   readonly nullable: false;
                 };
-                readonly gameId: {
-                  readonly nativeType: 'text';
-                  readonly codecId: 'pg/text@1';
-                  readonly nullable: false;
-                };
-                readonly userId: {
+                readonly memberId: {
                   readonly nativeType: 'text';
                   readonly codecId: 'pg/text@1';
                   readonly nullable: false;
@@ -368,18 +447,18 @@ type ContractBase = Omit<
                 };
               };
               primaryKey: { readonly columns: readonly ['id'] };
-              uniques: readonly [];
+              uniques: readonly [{ readonly columns: readonly ['campId', 'memberId'] }];
               indexes: readonly [
                 {
-                  readonly name: 'camp_gameId_idx_6cdb47f8';
-                  readonly prefix: 'camp_gameId_idx';
-                  readonly columns: readonly ['gameId'];
+                  readonly name: 'camp_members_campId_idx_1810cca2';
+                  readonly prefix: 'camp_members_campId_idx';
+                  readonly columns: readonly ['campId'];
                   readonly unique: false;
                 },
                 {
-                  readonly name: 'camp_userId_idx_a489d58a';
-                  readonly prefix: 'camp_userId_idx';
-                  readonly columns: readonly ['userId'];
+                  readonly name: 'camp_members_memberId_idx_76b3c263';
+                  readonly prefix: 'camp_members_memberId_idx';
+                  readonly columns: readonly ['memberId'];
                   readonly unique: false;
                 },
               ];
@@ -387,30 +466,165 @@ type ContractBase = Omit<
                 {
                   readonly source: {
                     readonly namespaceId: 'public' & NamespaceId;
-                    readonly tableName: 'camp';
-                    readonly columns: readonly ['gameId'];
+                    readonly tableName: 'camp_members';
+                    readonly columns: readonly ['campId'];
                   };
                   readonly target: {
                     readonly namespaceId: 'public' & NamespaceId;
-                    readonly tableName: 'game';
+                    readonly tableName: 'camps';
                     readonly columns: readonly ['id'];
                   };
                 },
                 {
                   readonly source: {
                     readonly namespaceId: 'public' & NamespaceId;
-                    readonly tableName: 'camp';
-                    readonly columns: readonly ['userId'];
+                    readonly tableName: 'camp_members';
+                    readonly columns: readonly ['memberId'];
                   };
                   readonly target: {
                     readonly namespaceId: 'public' & NamespaceId;
-                    readonly tableName: 'user';
+                    readonly tableName: 'users';
                     readonly columns: readonly ['id'];
                   };
                 },
               ];
             };
-            readonly game: {
+            readonly camps: {
+              columns: {
+                readonly id: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly name: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly gameId: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly creatorId: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly createdAt: {
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly nullable: false;
+                  readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
+                };
+                readonly updatedAt: {
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly nullable: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [{ readonly columns: readonly ['gameId', 'creatorId'] }];
+              indexes: readonly [
+                {
+                  readonly name: 'camps_gameId_idx_6cdb47f8';
+                  readonly prefix: 'camps_gameId_idx';
+                  readonly columns: readonly ['gameId'];
+                  readonly unique: false;
+                },
+                {
+                  readonly name: 'camps_creatorId_idx_3a77d800';
+                  readonly prefix: 'camps_creatorId_idx';
+                  readonly columns: readonly ['creatorId'];
+                  readonly unique: false;
+                },
+              ];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'camps';
+                    readonly columns: readonly ['gameId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'games';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'camps';
+                    readonly columns: readonly ['creatorId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'users';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+              ];
+            };
+            readonly game_camp_saves: {
+              columns: {
+                readonly id: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly campId: {
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly data: {
+                  readonly nativeType: 'json';
+                  readonly codecId: 'pg/json@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/json@1', '{}'>;
+                  };
+                };
+                readonly createdAt: {
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly nullable: false;
+                  readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
+                };
+                readonly updatedAt: {
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly nullable: false;
+                };
+              };
+              primaryKey: { readonly columns: readonly ['id'] };
+              uniques: readonly [];
+              indexes: readonly [
+                {
+                  readonly name: 'game_camp_saves_campId_idx_1810cca2';
+                  readonly prefix: 'game_camp_saves_campId_idx';
+                  readonly columns: readonly ['campId'];
+                  readonly unique: false;
+                },
+              ];
+              foreignKeys: readonly [
+                {
+                  readonly source: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'game_camp_saves';
+                    readonly columns: readonly ['campId'];
+                  };
+                  readonly target: {
+                    readonly namespaceId: 'public' & NamespaceId;
+                    readonly tableName: 'camps';
+                    readonly columns: readonly ['id'];
+                  };
+                },
+              ];
+            };
+            readonly games: {
               columns: {
                 readonly id: {
                   readonly nativeType: 'text';
@@ -436,17 +650,48 @@ type ContractBase = Omit<
                     readonly value: DefaultLiteralValue<'pg/bool@1', false>;
                   };
                 };
+                readonly createdAt: {
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly nullable: false;
+                  readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
+                };
+                readonly updatedAt: {
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly nullable: false;
+                };
               };
               primaryKey: { readonly columns: readonly ['id'] };
               uniques: readonly [];
               indexes: readonly [];
               foreignKeys: readonly [];
             };
-            readonly user: {
+            readonly users: {
               columns: {
                 readonly id: {
                   readonly nativeType: 'text';
                   readonly codecId: 'pg/text@1';
+                  readonly nullable: false;
+                };
+                readonly active: {
+                  readonly nativeType: 'bool';
+                  readonly codecId: 'pg/bool@1';
+                  readonly nullable: false;
+                  readonly default: {
+                    readonly kind: 'literal';
+                    readonly value: DefaultLiteralValue<'pg/bool@1', true>;
+                  };
+                };
+                readonly createdAt: {
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly nullable: false;
+                  readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
+                };
+                readonly updatedAt: {
+                  readonly nativeType: 'timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: false;
                 };
               };
@@ -466,9 +711,17 @@ type ContractBase = Omit<
   readonly target: 'postgres';
   readonly targetFamily: 'sql';
   readonly roots: {
-    readonly camp: { readonly namespace: 'public' & NamespaceId; readonly model: 'Camp' };
-    readonly game: { readonly namespace: 'public' & NamespaceId; readonly model: 'Game' };
-    readonly user: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
+    readonly camps: { readonly namespace: 'public' & NamespaceId; readonly model: 'Camp' };
+    readonly camp_members: {
+      readonly namespace: 'public' & NamespaceId;
+      readonly model: 'CampMember';
+    };
+    readonly users: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
+    readonly games: { readonly namespace: 'public' & NamespaceId; readonly model: 'Game' };
+    readonly game_camp_saves: {
+      readonly namespace: 'public' & NamespaceId;
+      readonly model: 'GameCampSave';
+    };
   };
   readonly domain: {
     readonly namespaces: {
@@ -488,7 +741,7 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
-              readonly userId: {
+              readonly creatorId: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
@@ -508,6 +761,14 @@ type ContractBase = Omit<
               };
             };
             readonly relations: {
+              readonly creator: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
+                readonly cardinality: 'N:1';
+                readonly on: {
+                  readonly localFields: readonly ['creatorId'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
               readonly game: {
                 readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Game' };
                 readonly cardinality: 'N:1';
@@ -516,23 +777,85 @@ type ContractBase = Omit<
                   readonly targetFields: readonly ['id'];
                 };
               };
-              readonly user: {
-                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
-                readonly cardinality: 'N:1';
+              readonly members: {
+                readonly to: {
+                  readonly namespace: 'public' & NamespaceId;
+                  readonly model: 'CampMember';
+                };
+                readonly cardinality: '1:N';
                 readonly on: {
-                  readonly localFields: readonly ['userId'];
-                  readonly targetFields: readonly ['id'];
+                  readonly localFields: readonly ['id'];
+                  readonly targetFields: readonly ['campId'];
                 };
               };
             };
             readonly storage: {
-              readonly table: 'camp';
+              readonly table: 'camps';
               readonly namespaceId: 'public';
               readonly fields: {
                 readonly id: { readonly column: 'id' };
                 readonly name: { readonly column: 'name' };
                 readonly gameId: { readonly column: 'gameId' };
-                readonly userId: { readonly column: 'userId' };
+                readonly creatorId: { readonly column: 'creatorId' };
+                readonly createdAt: { readonly column: 'createdAt' };
+                readonly updatedAt: { readonly column: 'updatedAt' };
+              };
+            };
+          };
+          readonly CampMember: {
+            readonly fields: {
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly campId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly memberId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly createdAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
+              };
+              readonly updatedAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
+              };
+            };
+            readonly relations: {
+              readonly camp: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Camp' };
+                readonly cardinality: 'N:1';
+                readonly on: {
+                  readonly localFields: readonly ['campId'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+              readonly member: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'User' };
+                readonly cardinality: 'N:1';
+                readonly on: {
+                  readonly localFields: readonly ['memberId'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+            };
+            readonly storage: {
+              readonly table: 'camp_members';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly id: { readonly column: 'id' };
+                readonly campId: { readonly column: 'campId' };
+                readonly memberId: { readonly column: 'memberId' };
                 readonly createdAt: { readonly column: 'createdAt' };
                 readonly updatedAt: { readonly column: 'updatedAt' };
               };
@@ -556,16 +879,83 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/bool@1' };
               };
+              readonly createdAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
+              };
+              readonly updatedAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
+              };
             };
             readonly relations: Record<string, never>;
             readonly storage: {
-              readonly table: 'game';
+              readonly table: 'games';
               readonly namespaceId: 'public';
               readonly fields: {
                 readonly id: { readonly column: 'id' };
                 readonly name: { readonly column: 'name' };
                 readonly logoURL: { readonly column: 'logoURL' };
                 readonly active: { readonly column: 'active' };
+                readonly createdAt: { readonly column: 'createdAt' };
+                readonly updatedAt: { readonly column: 'updatedAt' };
+              };
+            };
+          };
+          readonly GameCampSave: {
+            readonly fields: {
+              readonly id: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly campId: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+              };
+              readonly data: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/json@1' };
+              };
+              readonly createdAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
+              };
+              readonly updatedAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
+              };
+            };
+            readonly relations: {
+              readonly camp: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Camp' };
+                readonly cardinality: 'N:1';
+                readonly on: {
+                  readonly localFields: readonly ['campId'];
+                  readonly targetFields: readonly ['id'];
+                };
+              };
+            };
+            readonly storage: {
+              readonly table: 'game_camp_saves';
+              readonly namespaceId: 'public';
+              readonly fields: {
+                readonly id: { readonly column: 'id' };
+                readonly campId: { readonly column: 'campId' };
+                readonly data: { readonly column: 'data' };
+                readonly createdAt: { readonly column: 'createdAt' };
+                readonly updatedAt: { readonly column: 'updatedAt' };
               };
             };
           };
@@ -575,6 +965,24 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
+              readonly active: {
+                readonly nullable: false;
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/bool@1' };
+              };
+              readonly createdAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
+              };
+              readonly updatedAt: {
+                readonly nullable: false;
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                };
+              };
             };
             readonly relations: {
               readonly camps: {
@@ -582,14 +990,19 @@ type ContractBase = Omit<
                 readonly cardinality: '1:N';
                 readonly on: {
                   readonly localFields: readonly ['id'];
-                  readonly targetFields: readonly ['userId'];
+                  readonly targetFields: readonly ['creatorId'];
                 };
               };
             };
             readonly storage: {
-              readonly table: 'user';
+              readonly table: 'users';
               readonly namespaceId: 'public';
-              readonly fields: { readonly id: { readonly column: 'id' } };
+              readonly fields: {
+                readonly id: { readonly column: 'id' };
+                readonly active: { readonly column: 'active' };
+                readonly createdAt: { readonly column: 'createdAt' };
+                readonly updatedAt: { readonly column: 'updatedAt' };
+              };
             };
           };
         };
@@ -622,7 +1035,7 @@ type ContractBase = Omit<
         {
           readonly ref: {
             readonly namespace: 'public';
-            readonly table: 'camp';
+            readonly table: 'camp_members';
             readonly column: 'id';
           };
           readonly onCreate: { readonly kind: 'generator'; readonly id: 'uuidv4' };
@@ -630,7 +1043,7 @@ type ContractBase = Omit<
         {
           readonly ref: {
             readonly namespace: 'public';
-            readonly table: 'camp';
+            readonly table: 'camp_members';
             readonly column: 'updatedAt';
           };
           readonly onCreate: { readonly kind: 'generator'; readonly id: 'instantNow' };
@@ -639,7 +1052,7 @@ type ContractBase = Omit<
         {
           readonly ref: {
             readonly namespace: 'public';
-            readonly table: 'game';
+            readonly table: 'camps';
             readonly column: 'id';
           };
           readonly onCreate: { readonly kind: 'generator'; readonly id: 'uuidv4' };
@@ -647,10 +1060,62 @@ type ContractBase = Omit<
         {
           readonly ref: {
             readonly namespace: 'public';
-            readonly table: 'user';
+            readonly table: 'camps';
+            readonly column: 'updatedAt';
+          };
+          readonly onCreate: { readonly kind: 'generator'; readonly id: 'instantNow' };
+          readonly onUpdate: { readonly kind: 'generator'; readonly id: 'instantNow' };
+        },
+        {
+          readonly ref: {
+            readonly namespace: 'public';
+            readonly table: 'game_camp_saves';
             readonly column: 'id';
           };
           readonly onCreate: { readonly kind: 'generator'; readonly id: 'uuidv4' };
+        },
+        {
+          readonly ref: {
+            readonly namespace: 'public';
+            readonly table: 'game_camp_saves';
+            readonly column: 'updatedAt';
+          };
+          readonly onCreate: { readonly kind: 'generator'; readonly id: 'instantNow' };
+          readonly onUpdate: { readonly kind: 'generator'; readonly id: 'instantNow' };
+        },
+        {
+          readonly ref: {
+            readonly namespace: 'public';
+            readonly table: 'games';
+            readonly column: 'id';
+          };
+          readonly onCreate: { readonly kind: 'generator'; readonly id: 'uuidv4' };
+        },
+        {
+          readonly ref: {
+            readonly namespace: 'public';
+            readonly table: 'games';
+            readonly column: 'updatedAt';
+          };
+          readonly onCreate: { readonly kind: 'generator'; readonly id: 'instantNow' };
+          readonly onUpdate: { readonly kind: 'generator'; readonly id: 'instantNow' };
+        },
+        {
+          readonly ref: {
+            readonly namespace: 'public';
+            readonly table: 'users';
+            readonly column: 'id';
+          };
+          readonly onCreate: { readonly kind: 'generator'; readonly id: 'uuidv4' };
+        },
+        {
+          readonly ref: {
+            readonly namespace: 'public';
+            readonly table: 'users';
+            readonly column: 'updatedAt';
+          };
+          readonly onCreate: { readonly kind: 'generator'; readonly id: 'instantNow' };
+          readonly onUpdate: { readonly kind: 'generator'; readonly id: 'instantNow' };
         },
       ];
     };
