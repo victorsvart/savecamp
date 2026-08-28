@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useActivity } from "@/contexts/activity-context";
 import { useElectron } from "@/hooks/use-electron";
-import { getGameDisplayName, isGameSupported } from "@/lib/games";
 import { errorMessage } from "@/lib/http";
 import { detectGameQueryKey, detectLocalSaves } from "@/services/detect-game";
 
@@ -12,9 +11,7 @@ export type DetectStatus =
 export function useDetectGame(gameSlug: string) {
   const { isAvailable, api } = useElectron();
   const { setActivity, clearActivity } = useActivity();
-  const supported = isGameSupported(gameSlug);
-  const gameName = getGameDisplayName(gameSlug);
-  const enabled = Boolean(isAvailable && api && supported);
+  const enabled = Boolean(isAvailable && api);
 
   const query = useQuery({
     queryKey: detectGameQueryKey(gameSlug),
@@ -28,14 +25,14 @@ export function useDetectGame(gameSlug: string) {
       isFetching: query.isFetching,
       isError: query.isError,
       pathCount: query.data?.savePaths.length ?? 0,
-      gameName,
+      gameSlug,
       setActivity,
       clearActivity,
     });
   }, [
     clearActivity,
     enabled,
-    gameName,
+    gameSlug,
     query.data?.savePaths.length,
     query.isError,
     query.isFetching,
@@ -51,7 +48,6 @@ export function useDetectGame(gameSlug: string) {
   return {
     status: detectStatus({
       isAvailable,
-      supported,
       isLoading: query.isLoading,
       isError: query.isError,
       isSuccess: query.isSuccess,
@@ -59,23 +55,19 @@ export function useDetectGame(gameSlug: string) {
     basePath: query.data?.basePath ?? null,
     savePaths: query.data?.savePaths ?? [],
     error: errorMessage(query.error, "Falha ao comunicar com o Electron"),
-    gameName,
+    gameSlug,
     retry: query.refetch,
   };
 }
 
 function detectStatus(state: {
   isAvailable: boolean;
-  supported: boolean;
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;
 }): DetectStatus {
   if (!state.isAvailable) {
     return "no-electron";
-  }
-  if (!state.supported) {
-    return "unsupported";
   }
   if (state.isLoading) {
     return "scanning";
@@ -91,7 +83,7 @@ function syncDetectActivity({
   isFetching,
   isError,
   pathCount,
-  gameName,
+  gameSlug,
   setActivity,
   clearActivity,
 }: {
@@ -99,7 +91,7 @@ function syncDetectActivity({
   isFetching: boolean;
   isError: boolean;
   pathCount: number;
-  gameName: string;
+  gameSlug: string;
   setActivity: (status: "idle" | "active", message?: string) => void;
   clearActivity: () => void;
 }) {
@@ -109,7 +101,7 @@ function syncDetectActivity({
   }
 
   if (isFetching) {
-    setActivity("active", `Procurando saves de ${gameName}…`);
+    setActivity("active", `Procurando saves de ${gameSlug}…`);
     return;
   }
 

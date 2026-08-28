@@ -8,10 +8,11 @@ import {
 } from "@/components/save-cubby";
 import { useCloudSaves, type CloudSavesStatus } from "@/hooks/use-cloud-saves";
 import { useDetectGame } from "@/hooks/use-detect-game";
-import { getGameDisplayName, isGameSupported, slugToGame } from "@/lib/games";
 import type { Save } from "@savecamp/types";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { Navigate, useParams } from "react-router";
+import { toast } from "@/components/ui/toast";
+import { useGameInfo } from "@/hooks/use-game-info";
 
 function StatusBlock({
   title,
@@ -94,21 +95,50 @@ function CloudSavesSection({
 }
 
 export function DetectionPage() {
-  const { gameSlug = "" } = useParams<{ gameSlug: string }>();
-  const game = slugToGame(gameSlug);
-  const supported = isGameSupported(gameSlug);
-  const { status, basePath, savePaths, error, gameName, retry } =
-    useDetectGame(gameSlug);
-  const cloudSaves = useCloudSaves(game && supported ? gameSlug : null);
+  const { gameSlug } = useParams();
+  if (!gameSlug) {
+    toast.add({
+      title: "Jogo não encontrado",
+      description: "O jogo não foi encontrado.",
+      type: "error",
+    });
 
-  if (!game) {
     return <Navigate to="/home" replace />;
+  }
+
+  const { game, isLoading, isError } = useGameInfo(gameSlug);
+  const { status, basePath, savePaths, error, retry } = useDetectGame(gameSlug);
+  const {
+    status: cloudSavesStatus,
+    saves,
+    error: cloudSavesError,
+    retry: cloudSavesRetry,
+  } = useCloudSaves(gameSlug);
+
+  useEffect(() => {
+    if (isError) {
+      toast.add({
+        title: "Não foi possível carregar o jogo",
+        description: "O jogo não foi encontrado.",
+        type: "error",
+      });
+    }
+  }, [isError]);
+
+  if (isLoading) {
+    return (
+      <div className="mx-auto flex w-full max-w-xl flex-col gap-8">
+        <div>
+          <h2 className="text-base font-medium">Carregando…</h2>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="mx-auto flex w-full max-w-xl flex-col gap-8">
       <div>
-        <h2 className="text-base font-medium">{gameName}</h2>
+        <h2 className="text-base font-medium">{game?.name}</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           {status === "scanning"
             ? "Procurando em pastas de save do sistema…"
@@ -118,31 +148,27 @@ export function DetectionPage() {
         </p>
       </div>
 
-      {supported && (
-        <CloudSavesSection
-          status={cloudSaves.status}
-          saves={cloudSaves.saves}
-          error={cloudSaves.error}
-          retry={() => void cloudSaves.retry()}
-        />
-      )}
+      <CloudSavesSection
+        status={cloudSavesStatus}
+        saves={saves}
+        error={cloudSavesError}
+        retry={() => void cloudSavesRetry()}
+      />
 
       <section className="flex flex-col gap-3">
-        {supported && (
-          <div>
-            <h3 className="text-sm font-medium">Saves neste computador</h3>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Envie um arquivo local para o SaveCamp.
-            </p>
-          </div>
-        )}
+        <div>
+          <h3 className="text-sm font-medium">Saves neste computador</h3>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Envie um arquivo local para o SaveCamp.
+          </p>
+        </div>
 
         {status === "scanning" && (
           <div className="space-y-3">
             <div
               className="relative h-px w-full overflow-hidden bg-border"
               role="progressbar"
-              aria-label={`Procurando saves de ${gameName}`}
+              aria-label={`Procurando saves de ${game?.name}`}
               aria-busy="true"
             >
               <div className="progress-indeterminate absolute inset-y-0 w-1/4 bg-foreground/40" />
@@ -170,15 +196,13 @@ export function DetectionPage() {
         {status === "unsupported" && (
           <StatusBlock
             title="Ainda não rastreamos este jogo"
-            description={`A detecção de saves para ${gameName} ainda não está disponível.`}
+            description={`A detecção de saves para ${game?.name} ainda não está disponível.`}
           />
         )}
 
         {status === "error" && (
           <Alert variant="destructive">
-            <AlertTitle>
-              Não foi possível detectar {getGameDisplayName(gameSlug)}
-            </AlertTitle>
+            <AlertTitle>Não foi possível detectar {game?.name}</AlertTitle>
             <AlertDescription className="flex flex-col gap-3">
               <span>{error}</span>
               <Button
@@ -207,14 +231,16 @@ export function DetectionPage() {
 
         {status === "ready" && savePaths.length > 0 && basePath && (
           <ItemGroup data-size="sm">
-            {savePaths.map((savePath) => (
-              <SaveCubby
-                key={savePath}
-                gameSlug={gameSlug}
-                basePath={basePath}
-                savePath={savePath}
-              />
-            ))}
+            {game &&
+              savePaths.map((savePath) => (
+                <SaveCubby
+                  key={savePath}
+                  gameName={game?.name}
+                  gameSlug={game?.slug}
+                  basePath={basePath}
+                  savePath={savePath}
+                />
+              ))}
           </ItemGroup>
         )}
       </section>

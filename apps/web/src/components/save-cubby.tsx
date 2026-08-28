@@ -17,6 +17,7 @@ import { cloudSavesQueryKey } from "@/services/saves";
 import type { Save } from "@savecamp/types";
 
 type SaveCubbyProps = {
+  gameName: string;
   gameSlug: string;
   basePath: string;
   savePath: string;

@@ -33,7 +33,9 @@
       {
         "description": "ensure table \"camp_members\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
-        "params": ["\"public\".\"camp_members\""]
+        "params": [
+          "\"public\".\"camp_members\""
+        ]
       }
     ],
     "execute": [
@@ -47,7 +49,9 @@
       {
         "description": "verify table \"camp_members\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
-        "params": ["\"public\".\"camp_members\""]
+        "params": [
+          "\"public\".\"camp_members\""
+        ]
       }
     ]
   },
@@ -68,7 +72,9 @@
       {
         "description": "ensure table \"camps\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
-        "params": ["\"public\".\"camps\""]
+        "params": [
+          "\"public\".\"camps\""
+        ]
       }
     ],
     "execute": [
@@ -82,7 +88,9 @@
       {
         "description": "verify table \"camps\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
-        "params": ["\"public\".\"camps\""]
+        "params": [
+          "\"public\".\"camps\""
+        ]
       }
     ]
   },
@@ -103,7 +111,9 @@
       {
         "description": "ensure table \"game_camp_saves\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
-        "params": ["\"public\".\"game_camp_saves\""]
+        "params": [
+          "\"public\".\"game_camp_saves\""
+        ]
       }
     ],
     "execute": [
@@ -117,7 +127,9 @@
       {
         "description": "verify table \"game_camp_saves\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
-        "params": ["\"public\".\"game_camp_saves\""]
+        "params": [
+          "\"public\".\"game_camp_saves\""
+        ]
       }
     ]
   },
@@ -138,7 +150,9 @@
       {
         "description": "ensure table \"games\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
-        "params": ["\"public\".\"games\""]
+        "params": [
+          "\"public\".\"games\""
+        ]
       }
     ],
     "execute": [
@@ -152,7 +166,9 @@
       {
         "description": "verify table \"games\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
-        "params": ["\"public\".\"games\""]
+        "params": [
+          "\"public\".\"games\""
+        ]
       }
     ]
   },
@@ -173,7 +189,9 @@
       {
         "description": "ensure table \"users\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
-        "params": ["\"public\".\"users\""]
+        "params": [
+          "\"public\".\"users\""
+        ]
       }
     ],
     "execute": [
@@ -187,7 +205,9 @@
       {
         "description": "verify table \"users\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
-        "params": ["\"public\".\"users\""]
+        "params": [
+          "\"public\".\"users\""
+        ]
       }
     ]
   },
@@ -292,7 +312,9 @@
       {
         "description": "ensure index \"camp_members_campId_idx_1810cca2\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
-        "params": ["\"public\".\"camp_members_campId_idx_1810cca2\""]
+        "params": [
+          "\"public\".\"camp_members_campId_idx_1810cca2\""
+        ]
       }
     ],
     "execute": [
@@ -306,7 +328,9 @@
       {
         "description": "verify index \"camp_members_campId_idx_1810cca2\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
-        "params": ["\"public\".\"camp_members_campId_idx_1810cca2\""]
+        "params": [
+          "\"public\".\"camp_members_campId_idx_1810cca2\""
+        ]
       }
     ]
   },
@@ -327,7 +351,9 @@
       {
         "description": "ensure index \"camp_members_memberId_idx_76b3c263\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
-        "params": ["\"public\".\"camp_members_memberId_idx_76b3c263\""]
+        "params": [
+          "\"public\".\"camp_members_memberId_idx_76b3c263\""
+        ]
       }
     ],
     "execute": [
@@ -341,7 +367,9 @@
       {
         "description": "verify index \"camp_members_memberId_idx_76b3c263\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
-        "params": ["\"public\".\"camp_members_memberId_idx_76b3c263\""]
+        "params": [
+          "\"public\".\"camp_members_memberId_idx_76b3c263\""
+        ]
       }
     ]
   },
@@ -362,7 +390,9 @@
       {
         "description": "ensure index \"camps_creatorId_idx_3a77d800\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
-        "params": ["\"public\".\"camps_creatorId_idx_3a77d800\""]
+        "params": [
+          "\"public\".\"camps_creatorId_idx_3a77d800\""
+        ]
       }
     ],
     "execute": [
@@ -376,7 +406,9 @@
       {
         "description": "verify index \"camps_creatorId_idx_3a77d800\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
-        "params": ["\"public\".\"camps_creatorId_idx_3a77d800\""]
+        "params": [
+          "\"public\".\"camps_creatorId_idx_3a77d800\""
+        ]
       }
     ]
   },
@@ -397,7 +429,9 @@
       {
         "description": "ensure index \"camps_gameId_idx_6cdb47f8\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
-        "params": ["\"public\".\"camps_gameId_idx_6cdb47f8\""]
+        "params": [
+          "\"public\".\"camps_gameId_idx_6cdb47f8\""
+        ]
       }
     ],
     "execute": [
@@ -411,7 +445,9 @@
       {
         "description": "verify index \"camps_gameId_idx_6cdb47f8\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
-        "params": ["\"public\".\"camps_gameId_idx_6cdb47f8\""]
+        "params": [
+          "\"public\".\"camps_gameId_idx_6cdb47f8\""
+        ]
       }
     ]
   },
@@ -432,7 +468,9 @@
       {
         "description": "ensure index \"game_camp_saves_campId_idx_1810cca2\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
-        "params": ["\"public\".\"game_camp_saves_campId_idx_1810cca2\""]
+        "params": [
+          "\"public\".\"game_camp_saves_campId_idx_1810cca2\""
+        ]
       }
     ],
     "execute": [
@@ -446,7 +484,9 @@
       {
         "description": "verify index \"game_camp_saves_campId_idx_1810cca2\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
-        "params": ["\"public\".\"game_camp_saves_campId_idx_1810cca2\""]
+        "params": [
+          "\"public\".\"game_camp_saves_campId_idx_1810cca2\""
+        ]
       }
     ]
   },
@@ -551,7 +591,11 @@
       {
         "description": "ensure FK \"camps_gameId_fkey\" does not exist",
         "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
-        "params": ["camps_gameId_fkey", "public", "\"public\".\"camps\""]
+        "params": [
+          "camps_gameId_fkey",
+          "public",
+          "\"public\".\"camps\""
+        ]
       }
     ],
     "execute": [
@@ -564,7 +608,11 @@
       {
         "description": "verify FK \"camps_gameId_fkey\" exists",
         "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
-        "params": ["camps_gameId_fkey", "public", "\"public\".\"camps\""]
+        "params": [
+          "camps_gameId_fkey",
+          "public",
+          "\"public\".\"camps\""
+        ]
       }
     ]
   },
@@ -585,7 +633,11 @@
       {
         "description": "ensure FK \"camps_creatorId_fkey\" does not exist",
         "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
-        "params": ["camps_creatorId_fkey", "public", "\"public\".\"camps\""]
+        "params": [
+          "camps_creatorId_fkey",
+          "public",
+          "\"public\".\"camps\""
+        ]
       }
     ],
     "execute": [
@@ -598,7 +650,11 @@
       {
         "description": "verify FK \"camps_creatorId_fkey\" exists",
         "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
-        "params": ["camps_creatorId_fkey", "public", "\"public\".\"camps\""]
+        "params": [
+          "camps_creatorId_fkey",
+          "public",
+          "\"public\".\"camps\""
+        ]
       }
     ]
   },

@@ -18,9 +18,8 @@ export default definePrismaConfig({
     db: {
       connection: env.DATABASE_URL!,
     },
+    migrations: {
+      dir: "migrations",
+    },
   }),
-  migrations: {
-    path: "prisma/migrations",
-    seed: "tsx prisma/seed.ts",
-  },
 });

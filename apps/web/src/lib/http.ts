@@ -7,6 +7,7 @@ function getApiUrl(): string {
 
 export const http = ky.create({
   prefix: `${getApiUrl()}/v1/`,
+  retry: 3,
   hooks: {
     beforeRequest: [
       ({ request }) => {

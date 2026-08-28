@@ -2,13 +2,15 @@ import { db } from "./db.js";
 
 type Game = {
   name: string;
+  slug: string;
   logoURL: string;
   active: boolean;
 };
 
 const games: Game[] = [
   {
-    name: "BigWalk",
+    name: "Big Walk",
+    slug: "bigwalk",
     logoURL:
       "https://upload.wikimedia.org/wikipedia/commons/f/f8/Big_Walk-logo-dark-no-alpha.png?utm_source=fr.wikipedia.org&utm_campaign=index&utm_content=original",
     active: true,

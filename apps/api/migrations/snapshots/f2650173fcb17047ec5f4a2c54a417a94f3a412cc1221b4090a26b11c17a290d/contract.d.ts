@@ -33,7 +33,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'3763d505c15157b773c12b18340d93eca732599ced1128c8ba37d267c970d412'>;
+  StorageHashBase<'f2650173fcb17047ec5f4a2c54a417a94f3a412cc1221b4090a26b11c17a290d'>;
 export type ExecutionHash =
   ExecutionHashBase<'0398a32fc2b50b51fce4694636081076f2c7b98fed08742f70f1e59b7af1085a'>;
 export type ProfileHash =
@@ -649,10 +649,6 @@ type ContractBase = Omit<
                   readonly nativeType: 'text';
                   readonly codecId: 'pg/text@1';
                   readonly nullable: false;
-                  readonly default: {
-                    readonly kind: 'literal';
-                    readonly value: DefaultLiteralValue<'pg/text@1', 'change-me'>;
-                  };
                 };
                 readonly active: {
                   readonly nativeType: 'bool';

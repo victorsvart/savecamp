@@ -43,6 +43,7 @@ model Game {
   id        String               @id @default(uuid())
   name      String
   logoURL   String
+  slug      String               @unique @default("change-me")
   active    Boolean              @default(false)
   createdAt DateTime             @default(now())
   updatedAt temporal.updatedAt()

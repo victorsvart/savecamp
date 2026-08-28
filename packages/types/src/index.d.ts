@@ -10,8 +10,6 @@ export type ApiResponse<T> = {
   error: ApiError | null;
 };
 
-export const GAMES: string[] = ["Minecraft", "BigWalk"];
-
 export type GameSearchResult = {
   basePath: string;
   paths: string[];
@@ -98,6 +96,7 @@ export type SaveGetResponse = {
 export type GameResponse = {
   id: string;
   name: string;
+  slug: string;
   logoURL: string;
   active: boolean;
   humanReadableDate: string;

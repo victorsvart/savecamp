@@ -24,10 +24,12 @@ import {
 } from "@/components/ui/tooltip";
 import { ActivityProvider } from "@/contexts/activity-context";
 import { useTheme } from "@/components/theme-provider";
-import { gameToSlug, getDetectionPath, isGameSupported } from "@/lib/games";
-import { GAMES } from "@savecamp/types";
 import { MoonIcon, SunIcon } from "lucide-react";
-import { Link, Outlet, useLocation } from "react-router";
+import { Link, Outlet } from "react-router";
+import type { GameResponse } from "@savecamp/types";
+import { useGames } from "@/hooks/use-games";
+import { toast } from "@/components/ui/toast";
+import { useEffect } from "react";
 
 function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -66,7 +68,43 @@ function ThemeToggle() {
 }
 
 function AppShell() {
-  const location = useLocation();
+  const { data: gameData, isLoading, error } = useGames();
+
+  useEffect(() => {
+    if (error) {
+      toast.add({
+        title: "Erro ao carregar jogos",
+        description: error.message,
+        type: "error",
+      });
+    }
+  }, [error]);
+
+  const gameMenuRow = (games: GameResponse[]) => {
+    return games.map((g: GameResponse) => {
+      return (
+        <SidebarMenuItem key={g.name}>
+          <SidebarMenuButton className="font-normal">
+            <Link to={`/home/${g.slug}/detection`}>
+              <span className="flex w-full items-center justify-between gap-2">
+                <span>{g.name}</span>
+              </span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      );
+    });
+  };
+
+  const gameLoadingState = (
+    <SidebarMenuItem>
+      <SidebarMenuButton className="font-normal">
+        <span className="flex w-full items-center justify-between gap-2">
+          <span>Carregando jogos...</span>
+        </span>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  );
 
   return (
     <SidebarProvider
@@ -92,31 +130,7 @@ function AppShell() {
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {GAMES.map((game) => {
-                  const slug = gameToSlug(game);
-                  const path = getDetectionPath(slug);
-                  const isActive = location.pathname.startsWith(path);
-                  const supported = isGameSupported(slug);
-
-                  return (
-                    <SidebarMenuItem key={game}>
-                      <SidebarMenuButton
-                        isActive={isActive}
-                        render={<Link to={path} />}
-                        className="font-normal"
-                      >
-                        <span className="flex w-full items-center justify-between gap-2">
-                          <span>{game}</span>
-                          {!supported && (
-                            <span className="text-[10px] text-muted-foreground">
-                              em breve
-                            </span>
-                          )}
-                        </span>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  );
-                })}
+                {isLoading ? gameLoadingState : gameMenuRow(gameData!)}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

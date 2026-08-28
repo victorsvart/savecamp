@@ -1,10 +1,42 @@
-import { Separator } from "@/components/ui/separator";
-import { gameToSlug, getDetectionPath, isGameSupported } from "@/lib/games";
-import { GAMES } from "@savecamp/types";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/toast";
+import { useGames } from "@/hooks/use-games";
+import type { GameResponse } from "@savecamp/types";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
 export function Home() {
   const navigate = useNavigate();
+  const { data: gameData, isLoading, error } = useGames();
+
+  useEffect(() => {
+    if (error) {
+      toast.add({
+        title: "Erro ao carregar jogos",
+        description: error.message,
+        type: "error",
+      });
+    }
+  }, [error]);
+
+  const gameMenuRow = (games: GameResponse[]) => {
+    return games.map((g: GameResponse) => {
+      return (
+        <Button
+          key={g.name}
+          onClick={() => navigate(`/home/${g.slug}/detection`)}
+        >
+          <span>{g.name}</span>
+        </Button>
+      );
+    });
+  };
+
+  const gameLoadingState = (
+    <div>
+      <span>Carregando jogos...</span>
+    </div>
+  );
 
   return (
     <div className="mx-auto flex w-full max-w-lg flex-col gap-4">
@@ -16,26 +48,7 @@ export function Home() {
       </div>
 
       <div className="border">
-        {GAMES.map((game, index) => {
-          const slug = gameToSlug(game);
-          const supported = isGameSupported(slug);
-
-          return (
-            <div key={game}>
-              {index > 0 && <Separator />}
-              <button
-                type="button"
-                className="flex w-full items-center justify-between gap-3 px-3 py-3 text-left text-sm transition-colors hover:bg-muted/60"
-                onClick={() => navigate(getDetectionPath(slug))}
-              >
-                <span>{game}</span>
-                <span className="text-xs text-muted-foreground">
-                  {supported ? "Detectar" : "Em breve"}
-                </span>
-              </button>
-            </div>
-          );
-        })}
+        {isLoading ? gameLoadingState : gameMenuRow(gameData!)}
       </div>
 
       <p className="text-xs text-muted-foreground">

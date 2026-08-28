@@ -78,8 +78,12 @@
               "creator": {
                 "cardinality": "N:1",
                 "on": {
-                  "localFields": ["creatorId"],
-                  "targetFields": ["id"]
+                  "localFields": [
+                    "creatorId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
                 },
                 "to": {
                   "model": "User",
@@ -89,8 +93,12 @@
               "game": {
                 "cardinality": "N:1",
                 "on": {
-                  "localFields": ["gameId"],
-                  "targetFields": ["id"]
+                  "localFields": [
+                    "gameId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
                 },
                 "to": {
                   "model": "Game",
@@ -100,8 +108,12 @@
               "members": {
                 "cardinality": "1:N",
                 "on": {
-                  "localFields": ["id"],
-                  "targetFields": ["campId"]
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "campId"
+                  ]
                 },
                 "to": {
                   "model": "CampMember",
@@ -176,8 +188,12 @@
               "camp": {
                 "cardinality": "N:1",
                 "on": {
-                  "localFields": ["campId"],
-                  "targetFields": ["id"]
+                  "localFields": [
+                    "campId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
                 },
                 "to": {
                   "model": "Camp",
@@ -187,8 +203,12 @@
               "member": {
                 "cardinality": "N:1",
                 "on": {
-                  "localFields": ["memberId"],
-                  "targetFields": ["id"]
+                  "localFields": [
+                    "memberId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
                 },
                 "to": {
                   "model": "User",
@@ -255,6 +275,13 @@
                   "kind": "scalar"
                 }
               },
+              "slug": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
               "updatedAt": {
                 "nullable": false,
                 "type": {
@@ -280,6 +307,9 @@
                 },
                 "name": {
                   "column": "name"
+                },
+                "slug": {
+                  "column": "slug"
                 },
                 "updatedAt": {
                   "column": "updatedAt"
@@ -331,8 +361,12 @@
               "camp": {
                 "cardinality": "N:1",
                 "on": {
-                  "localFields": ["campId"],
-                  "targetFields": ["id"]
+                  "localFields": [
+                    "campId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
                 },
                 "to": {
                   "model": "Camp",
@@ -397,8 +431,12 @@
               "camps": {
                 "cardinality": "1:N",
                 "on": {
-                  "localFields": ["id"],
-                  "targetFields": ["creatorId"]
+                  "localFields": [
+                    "id"
+                  ],
+                  "targetFields": [
+                    "creatorId"
+                  ]
                 },
                 "to": {
                   "model": "Camp",
@@ -469,24 +507,32 @@
               "foreignKeys": [
                 {
                   "source": {
-                    "columns": ["campId"],
+                    "columns": [
+                      "campId"
+                    ],
                     "namespaceId": "public",
                     "tableName": "camp_members"
                   },
                   "target": {
-                    "columns": ["id"],
+                    "columns": [
+                      "id"
+                    ],
                     "namespaceId": "public",
                     "tableName": "camps"
                   }
                 },
                 {
                   "source": {
-                    "columns": ["memberId"],
+                    "columns": [
+                      "memberId"
+                    ],
                     "namespaceId": "public",
                     "tableName": "camp_members"
                   },
                   "target": {
-                    "columns": ["id"],
+                    "columns": [
+                      "id"
+                    ],
                     "namespaceId": "public",
                     "tableName": "users"
                   }
@@ -494,24 +540,33 @@
               ],
               "indexes": [
                 {
-                  "columns": ["campId"],
+                  "columns": [
+                    "campId"
+                  ],
                   "name": "camp_members_campId_idx_1810cca2",
                   "prefix": "camp_members_campId_idx",
                   "unique": false
                 },
                 {
-                  "columns": ["memberId"],
+                  "columns": [
+                    "memberId"
+                  ],
                   "name": "camp_members_memberId_idx_76b3c263",
                   "prefix": "camp_members_memberId_idx",
                   "unique": false
                 }
               ],
               "primaryKey": {
-                "columns": ["id"]
+                "columns": [
+                  "id"
+                ]
               },
               "uniques": [
                 {
-                  "columns": ["campId", "memberId"]
+                  "columns": [
+                    "campId",
+                    "memberId"
+                  ]
                 }
               ]
             },
@@ -555,24 +610,32 @@
               "foreignKeys": [
                 {
                   "source": {
-                    "columns": ["gameId"],
+                    "columns": [
+                      "gameId"
+                    ],
                     "namespaceId": "public",
                     "tableName": "camps"
                   },
                   "target": {
-                    "columns": ["id"],
+                    "columns": [
+                      "id"
+                    ],
                     "namespaceId": "public",
                     "tableName": "games"
                   }
                 },
                 {
                   "source": {
-                    "columns": ["creatorId"],
+                    "columns": [
+                      "creatorId"
+                    ],
                     "namespaceId": "public",
                     "tableName": "camps"
                   },
                   "target": {
-                    "columns": ["id"],
+                    "columns": [
+                      "id"
+                    ],
                     "namespaceId": "public",
                     "tableName": "users"
                   }
@@ -580,24 +643,33 @@
               ],
               "indexes": [
                 {
-                  "columns": ["creatorId"],
+                  "columns": [
+                    "creatorId"
+                  ],
                   "name": "camps_creatorId_idx_3a77d800",
                   "prefix": "camps_creatorId_idx",
                   "unique": false
                 },
                 {
-                  "columns": ["gameId"],
+                  "columns": [
+                    "gameId"
+                  ],
                   "name": "camps_gameId_idx_6cdb47f8",
                   "prefix": "camps_gameId_idx",
                   "unique": false
                 }
               ],
               "primaryKey": {
-                "columns": ["id"]
+                "columns": [
+                  "id"
+                ]
               },
               "uniques": [
                 {
-                  "columns": ["gameId", "creatorId"]
+                  "columns": [
+                    "gameId",
+                    "creatorId"
+                  ]
                 }
               ]
             },
@@ -640,12 +712,16 @@
               "foreignKeys": [
                 {
                   "source": {
-                    "columns": ["campId"],
+                    "columns": [
+                      "campId"
+                    ],
                     "namespaceId": "public",
                     "tableName": "game_camp_saves"
                   },
                   "target": {
-                    "columns": ["id"],
+                    "columns": [
+                      "id"
+                    ],
                     "namespaceId": "public",
                     "tableName": "camps"
                   }
@@ -653,14 +729,18 @@
               ],
               "indexes": [
                 {
-                  "columns": ["campId"],
+                  "columns": [
+                    "campId"
+                  ],
                   "name": "game_camp_saves_campId_idx_1810cca2",
                   "prefix": "game_camp_saves_campId_idx",
                   "unique": false
                 }
               ],
               "primaryKey": {
-                "columns": ["id"]
+                "columns": [
+                  "id"
+                ]
               },
               "uniques": []
             },
@@ -699,6 +779,15 @@
                   "nativeType": "text",
                   "nullable": false
                 },
+                "slug": {
+                  "codecId": "pg/text@1",
+                  "default": {
+                    "kind": "literal",
+                    "value": "change-me"
+                  },
+                  "nativeType": "text",
+                  "nullable": false
+                },
                 "updatedAt": {
                   "codecId": "pg/timestamptz-temporal@1",
                   "nativeType": "timestamptz",
@@ -708,9 +797,17 @@
               "foreignKeys": [],
               "indexes": [],
               "primaryKey": {
-                "columns": ["id"]
+                "columns": [
+                  "id"
+                ]
               },
-              "uniques": []
+              "uniques": [
+                {
+                  "columns": [
+                    "slug"
+                  ]
+                }
+              ]
             },
             "users": {
               "columns": {
@@ -746,7 +843,9 @@
               "foreignKeys": [],
               "indexes": [],
               "primaryKey": {
-                "columns": ["id"]
+                "columns": [
+                  "id"
+                ]
               },
               "uniques": []
             }
@@ -756,7 +855,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "8dd3da8c39331e4b721af44c8995ec91a0bbcb06e0a82c2aa640b57ba4dff1cb"
+    "storageHash": "3763d505c15157b773c12b18340d93eca732599ced1128c8ba37d267c970d412"
   },
   "execution": {
     "executionHash": "0398a32fc2b50b51fce4694636081076f2c7b98fed08742f70f1e59b7af1085a",
