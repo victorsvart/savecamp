@@ -6,23 +6,9 @@ import type {
   SaveUploadCompleteRequest,
   SaveUploadResponse,
 } from "@savecamp/types";
+import { getApiHeaders, getApiUrl, readApiData } from "../http";
 
 const SAVE_CONTENT_TYPE = "application/octet-stream";
-
-function getApiUrl(): string {
-  return process.env.SAVECAMP_API_URL ?? "http://localhost:3000";
-}
-
-function getApiHeaders(): Record<string, string> {
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-  };
-  const secret = process.env.SAVECAMP_API_SECRET;
-  if (secret) {
-    headers.Authorization = `Bearer ${secret}`;
-  }
-  return headers;
-}
 
 async function abortMultipartUpload(
   key: string,
@@ -60,12 +46,10 @@ export async function saveGameStateToCloud(
       }),
     });
 
-    if (!uploadResponse.ok) {
-      const text = await uploadResponse.text();
-      throw new Error(`Upload init failed: ${uploadResponse.status} ${text}`);
-    }
-
-    const upload = (await uploadResponse.json()) as SaveUploadResponse;
+    const upload = await readApiData<SaveUploadResponse>(
+      uploadResponse,
+      "Upload init failed"
+    );
 
     if (upload.mode === "exists") {
       return { savedTo: upload.key, error: null };
@@ -126,12 +110,7 @@ export async function saveGameStateToCloud(
         }
       );
 
-      if (!completeResponse.ok) {
-        const text = await completeResponse.text();
-        throw new Error(
-          `Complete upload failed: ${completeResponse.status} ${text}`
-        );
-      }
+      await readApiData(completeResponse, "Complete upload failed");
 
       return { savedTo: upload.key, error: null };
     } catch (error) {

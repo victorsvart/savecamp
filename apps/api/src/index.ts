@@ -1,8 +1,10 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import type { AppId } from "@savecamp/types";
+import { savesRoutes } from "./domains/saves/routes.js";
+import { error } from "./lib/http.js";
 import { apiAuth } from "./middleware/auth.js";
-import { savesRoutes } from "./routes/saves.js";
 
 export const APP_ID: AppId = "api";
 
@@ -12,15 +14,20 @@ app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
 
+app.use(
+  "/v1/*",
+  cors({
+    origin: "*",
+    allowHeaders: ["Authorization", "Content-Type"],
+    allowMethods: ["GET", "POST", "OPTIONS"],
+  })
+);
 app.use("/v1/saves/*", apiAuth);
 app.route("/v1/saves", savesRoutes);
 
-app.onError((error, c) => {
-  console.error(error);
-  return c.json(
-    { error: error instanceof Error ? error.message : "Internal server error" },
-    500
-  );
+app.onError((err, c) => {
+  console.error(err);
+  return error(c, err);
 });
 
 serve(

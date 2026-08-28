@@ -4,6 +4,29 @@ export const MULTIPART_THRESHOLD = 8 * 1024 * 1024;
 export const PART_SIZE = 8 * 1024 * 1024;
 export const PRESIGN_EXPIRES_IN = 3600;
 
+export function getS3Client(): S3Client {
+  if (!s3Client) {
+    const config = getR2Config();
+    s3Client = new S3Client({
+      region: "auto",
+      endpoint: config.endpoint,
+      forcePathStyle: true,
+      credentials: {
+        accessKeyId: config.accessKeyId,
+        secretAccessKey: config.secretAccessKey,
+      },
+    });
+  }
+
+  return s3Client;
+}
+
+export function getR2Bucket(): string {
+  return getR2Config().bucket;
+}
+
+let s3Client: S3Client | null = null;
+
 type R2Config = {
   accountId: string;
   accessKeyId: string;
@@ -35,34 +58,4 @@ function getR2Config(): R2Config {
     bucket,
     endpoint,
   };
-}
-
-let s3Client: S3Client | null = null;
-
-export function getS3Client(): S3Client {
-  if (!s3Client) {
-    const config = getR2Config();
-    s3Client = new S3Client({
-      region: "auto",
-      endpoint: config.endpoint,
-      forcePathStyle: true,
-      credentials: {
-        accessKeyId: config.accessKeyId,
-        secretAccessKey: config.secretAccessKey,
-      },
-    });
-  }
-
-  return s3Client;
-}
-
-export function getR2Bucket(): string {
-  return getR2Config().bucket;
-}
-
-export function buildSaveObjectKey(
-  gameName: string,
-  contentHash: string
-): string {
-  return `saves/${gameName}/${contentHash}.sav`;
 }

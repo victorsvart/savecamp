@@ -1,5 +1,15 @@
 export type AppId = "web" | "desktop" | "api";
 
+export type ApiError = {
+  message: string;
+};
+
+export type ApiResponse<T> = {
+  message: string | null;
+  data: T | null;
+  error: ApiError | null;
+};
+
 export const GAMES: string[] = ["Minecraft", "BigWalk"];
 
 export type GameSearchResult = {
@@ -61,7 +71,26 @@ export type SaveUploadCompleteRequest = {
   parts: SaveUploadCompletePart[];
 };
 
+export type SaveUploadCompleteResponse = {
+  key: string;
+};
+
 export type SaveUploadAbortRequest = {
   key: string;
   uploadId: string;
+};
+
+export type SaveUploadAbortResponse = {
+  ok: true;
+};
+
+export type Save = {
+  fileName: string;
+  lastModified: string;
+  size: number;
+  humanReadableDate: string;
+};
+
+export type SaveGetResponse = {
+  saves: Save[];
 };

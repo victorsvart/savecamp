@@ -4,6 +4,9 @@ import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
 
 const rendererOutDir = path.resolve(import.meta.dirname, "../desktop/renderer");
+const apiOrigin = new URL(
+  process.env.VITE_SAVECAMP_API_URL ?? "http://localhost:3000"
+).origin;
 
 function productionCsp(): Plugin {
   return {
@@ -15,7 +18,7 @@ function productionCsp(): Plugin {
 
       return html.replace(
         "<head>",
-        `<head>\n    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:" />`
+        `<head>\n    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ${apiOrigin}" />`
       );
     },
   };

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +13,8 @@ import { Spinner } from "@/components/ui/spinner";
 import { toast } from "@/components/ui/toast";
 import { useActivity } from "@/contexts/activity-context";
 import { useElectron } from "@/hooks/use-electron";
+import { cloudSavesQueryKey } from "@/services/saves";
+import type { Save } from "@savecamp/types";
 
 type SaveCubbyProps = {
   gameSlug: string;
@@ -24,9 +27,25 @@ function getFileName(path: string): string {
   return parts[parts.length - 1] || path;
 }
 
-export function SaveCubby({ gameSlug, basePath, savePath }: SaveCubbyProps) {
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) {
+    return `${bytes} B`;
+  }
+  const kilobytes = bytes / 1024;
+  if (kilobytes < 1024) {
+    return `${kilobytes.toFixed(1)} KB`;
+  }
+  return `${(kilobytes / 1024).toFixed(1)} MB`;
+}
+
+export function SaveCubby({
+  gameSlug,
+  basePath,
+  savePath,
+}: SaveCubbyProps) {
   const { api } = useElectron();
   const { setActivity, clearActivity } = useActivity();
+  const queryClient = useQueryClient();
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
@@ -58,6 +77,9 @@ export function SaveCubby({ gameSlug, basePath, savePath }: SaveCubbyProps) {
         type: "success",
         title: "Salvo no SaveCamp",
         description: result.savedTo ?? fileName,
+      });
+      void queryClient.invalidateQueries({
+        queryKey: cloudSavesQueryKey(gameSlug),
       });
       clearActivity();
     } catch (caught) {
@@ -105,6 +127,27 @@ export function SaveCubby({ gameSlug, basePath, savePath }: SaveCubbyProps) {
             )}
           </Button>
         )}
+      </ItemActions>
+    </Item>
+  );
+}
+
+export function CloudSaveCubby({ save }: { save: Save }) {
+  return (
+    <Item
+      variant="outline"
+      className="rounded-none first:rounded-t-md last:rounded-b-md"
+    >
+      <ItemContent className="min-w-0 flex-1">
+        <ItemTitle className="font-mono text-xs tabular-nums">
+          {save.fileName}
+        </ItemTitle>
+        <ItemDescription className="truncate text-[11px]">
+          {save.humanReadableDate} · {formatBytes(save.size)}
+        </ItemDescription>
+      </ItemContent>
+      <ItemActions className="shrink-0">
+        <Badge variant="outline">Na nuvem</Badge>
       </ItemActions>
     </Item>
   );
