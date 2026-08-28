@@ -2,23 +2,12 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useActivity } from "@/contexts/activity-context";
 import { useElectron } from "@/hooks/use-electron";
-import {
-  getGameDisplayName,
-  isGameSupported,
-} from "@/lib/games";
+import { getGameDisplayName, isGameSupported } from "@/lib/games";
 import { errorMessage } from "@/lib/http";
-import {
-  detectGameQueryKey,
-  detectLocalSaves,
-} from "@/services/detect-game";
+import { detectGameQueryKey, detectLocalSaves } from "@/services/detect-game";
 
 export type DetectStatus =
-  | "idle"
-  | "scanning"
-  | "ready"
-  | "error"
-  | "unsupported"
-  | "no-electron";
+  "idle" | "scanning" | "ready" | "error" | "unsupported" | "no-electron";
 
 export function useDetectGame(gameSlug: string) {
   const { isAvailable, api } = useElectron();

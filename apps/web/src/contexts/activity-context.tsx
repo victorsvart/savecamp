@@ -43,7 +43,9 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <ActivityContext.Provider value={value}>{children}</ActivityContext.Provider>
+    <ActivityContext.Provider value={value}>
+      {children}
+    </ActivityContext.Provider>
   );
 }
 

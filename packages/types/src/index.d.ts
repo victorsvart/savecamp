@@ -94,3 +94,11 @@ export type Save = {
 export type SaveGetResponse = {
   saves: Save[];
 };
+
+export type GameResponse = {
+  id: string;
+  name: string;
+  logoURL: string;
+  active: boolean;
+  humanReadableDate: string;
+};

@@ -1,9 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import {
-  gameToSlug,
-  getDetectionPath,
-  isGameSupported,
-} from "@/lib/games";
+import { gameToSlug, getDetectionPath, isGameSupported } from "@/lib/games";
 import { GAMES } from "@savecamp/types";
 import { useNavigate } from "react-router";
 

@@ -38,11 +38,7 @@ function formatBytes(bytes: number): string {
   return `${(kilobytes / 1024).toFixed(1)} MB`;
 }
 
-export function SaveCubby({
-  gameSlug,
-  basePath,
-  savePath,
-}: SaveCubbyProps) {
+export function SaveCubby({ gameSlug, basePath, savePath }: SaveCubbyProps) {
   const { api } = useElectron();
   const { setActivity, clearActivity } = useActivity();
   const queryClient = useQueryClient();
@@ -98,7 +94,10 @@ export function SaveCubby({
   };
 
   return (
-    <Item variant="outline" className="rounded-none first:rounded-t-md last:rounded-b-md">
+    <Item
+      variant="outline"
+      className="rounded-none first:rounded-t-md last:rounded-b-md"
+    >
       <ItemContent className="min-w-0 flex-1">
         <ItemTitle className="font-mono text-xs tabular-nums">
           {fileName}

@@ -7,11 +7,12 @@
     "dev": "node --env-file=.env --import tsx --watch src/index.ts",
     "build": "tsc",
     "start": "node --env-file=.env dist/index.js",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.config.json",
     "contract:emit": "prisma contract emit",
     "db:init": "prisma db init",
     "db:update": "prisma db update",
     "db:verify": "prisma db verify",
+    "db:seed": "node --env-file=.env --import tsx src/prisma/seed.ts",
     "migrate": "prisma db migrate",
     "migration:plan": "prisma migration plan",
     "postinstall": "prisma skills sync || exit 0"

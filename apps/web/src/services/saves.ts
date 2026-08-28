@@ -6,7 +6,5 @@ export function cloudSavesQueryKey(gameSlug: string) {
 }
 
 export async function getGameSaves(gameName: string): Promise<SaveGetResponse> {
-  return getData<SaveGetResponse>(
-    `saves/${encodeURIComponent(gameName)}`
-  );
+  return getData<SaveGetResponse>(`saves/${encodeURIComponent(gameName)}`);
 }

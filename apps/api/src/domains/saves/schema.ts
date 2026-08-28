@@ -26,7 +26,8 @@ export const saveUploadCompleteRequest: z.ZodType<SaveUploadCompleteRequest> =
       .min(1),
   });
 
-export const saveUploadAbortRequest: z.ZodType<SaveUploadAbortRequest> = z.object({
-  key: z.string().min(1),
-  uploadId: z.string().min(1),
-});
+export const saveUploadAbortRequest: z.ZodType<SaveUploadAbortRequest> =
+  z.object({
+    key: z.string().min(1),
+    uploadId: z.string().min(1),
+  });

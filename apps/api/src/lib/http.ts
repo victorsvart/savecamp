@@ -68,7 +68,9 @@ function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : "Internal server error";
 }
 
-function isHttpStatus(status: number | undefined): status is ContentfulStatusCode {
+function isHttpStatus(
+  status: number | undefined
+): status is ContentfulStatusCode {
   return status != null && status >= 400 && status <= 599;
 }
 

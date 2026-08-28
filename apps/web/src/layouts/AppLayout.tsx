@@ -24,11 +24,7 @@ import {
 } from "@/components/ui/tooltip";
 import { ActivityProvider } from "@/contexts/activity-context";
 import { useTheme } from "@/components/theme-provider";
-import {
-  gameToSlug,
-  getDetectionPath,
-  isGameSupported,
-} from "@/lib/games";
+import { gameToSlug, getDetectionPath, isGameSupported } from "@/lib/games";
 import { GAMES } from "@savecamp/types";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { Link, Outlet, useLocation } from "react-router";
@@ -55,9 +51,7 @@ function ThemeToggle() {
             size="icon-sm"
             onClick={() => setTheme(nextTheme)}
             aria-label={
-              nextTheme === "dark"
-                ? "Ativar modo escuro"
-                : "Ativar modo claro"
+              nextTheme === "dark" ? "Ativar modo escuro" : "Ativar modo claro"
             }
           />
         }
@@ -93,7 +87,7 @@ function AppShell() {
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel className="text-[11px] uppercase tracking-wide text-muted-foreground">
+            <SidebarGroupLabel className="text-[11px] tracking-wide text-muted-foreground uppercase">
               Jogos
             </SidebarGroupLabel>
             <SidebarGroupContent>

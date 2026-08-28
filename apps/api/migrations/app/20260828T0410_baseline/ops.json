@@ -1,0 +1,647 @@
+[
+  {
+    "id": "schema.public",
+    "label": "Create schema \"public\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres"
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "Create schema \"public\"",
+        "sql": "CREATE SCHEMA IF NOT EXISTS \"public\"",
+        "params": []
+      }
+    ],
+    "postcheck": []
+  },
+  {
+    "id": "table.camp_members",
+    "label": "Create table \"camp_members\"",
+    "summary": "Creates table \"camp_members\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "camp_members"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"camp_members\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": ["\"public\".\"camp_members\""]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"camp_members\"",
+        "sql": "CREATE TABLE \"public\".\"camp_members\" (\n  \"campId\" text NOT NULL,\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"id\" text NOT NULL,\n  \"memberId\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"camp_members\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": ["\"public\".\"camp_members\""]
+      }
+    ]
+  },
+  {
+    "id": "table.camps",
+    "label": "Create table \"camps\"",
+    "summary": "Creates table \"camps\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "camps"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"camps\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": ["\"public\".\"camps\""]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"camps\"",
+        "sql": "CREATE TABLE \"public\".\"camps\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"creatorId\" text NOT NULL,\n  \"gameId\" text NOT NULL,\n  \"id\" text NOT NULL,\n  \"name\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"camps\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": ["\"public\".\"camps\""]
+      }
+    ]
+  },
+  {
+    "id": "table.game_camp_saves",
+    "label": "Create table \"game_camp_saves\"",
+    "summary": "Creates table \"game_camp_saves\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "game_camp_saves"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"game_camp_saves\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": ["\"public\".\"game_camp_saves\""]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"game_camp_saves\"",
+        "sql": "CREATE TABLE \"public\".\"game_camp_saves\" (\n  \"campId\" text NOT NULL,\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"data\" json DEFAULT '\"{}\"'::json NOT NULL,\n  \"id\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"game_camp_saves\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": ["\"public\".\"game_camp_saves\""]
+      }
+    ]
+  },
+  {
+    "id": "table.games",
+    "label": "Create table \"games\"",
+    "summary": "Creates table \"games\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "games"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"games\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": ["\"public\".\"games\""]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"games\"",
+        "sql": "CREATE TABLE \"public\".\"games\" (\n  \"active\" bool DEFAULT false NOT NULL,\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"id\" text NOT NULL,\n  \"logoURL\" text NOT NULL,\n  \"name\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"games\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": ["\"public\".\"games\""]
+      }
+    ]
+  },
+  {
+    "id": "table.users",
+    "label": "Create table \"users\"",
+    "summary": "Creates table \"users\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "users"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"users\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": ["\"public\".\"users\""]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"users\"",
+        "sql": "CREATE TABLE \"public\".\"users\" (\n  \"active\" bool DEFAULT true NOT NULL,\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"id\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\")\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"users\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": ["\"public\".\"users\""]
+      }
+    ]
+  },
+  {
+    "id": "unique.camp_members.camp_members_campId_memberId_key",
+    "label": "Add unique constraint on \"camp_members\" (campId, memberId)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "camp_members_campId_memberId_key",
+        "table": "camp_members"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"camp_members_campId_memberId_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "camp_members_campId_memberId_key",
+          "public",
+          "\"public\".\"camp_members\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"camp_members_campId_memberId_key\"",
+        "sql": "ALTER TABLE \"public\".\"camp_members\" ADD CONSTRAINT \"camp_members_campId_memberId_key\" UNIQUE (\"campId\", \"memberId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"camp_members_campId_memberId_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "camp_members_campId_memberId_key",
+          "public",
+          "\"public\".\"camp_members\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.camps.camps_gameId_creatorId_key",
+    "label": "Add unique constraint on \"camps\" (gameId, creatorId)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "camps_gameId_creatorId_key",
+        "table": "camps"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"camps_gameId_creatorId_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "camps_gameId_creatorId_key",
+          "public",
+          "\"public\".\"camps\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"camps_gameId_creatorId_key\"",
+        "sql": "ALTER TABLE \"public\".\"camps\" ADD CONSTRAINT \"camps_gameId_creatorId_key\" UNIQUE (\"gameId\", \"creatorId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"camps_gameId_creatorId_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "camps_gameId_creatorId_key",
+          "public",
+          "\"public\".\"camps\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.camp_members.camp_members_campId_idx_1810cca2",
+    "label": "Create index \"camp_members_campId_idx_1810cca2\" on \"camp_members\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "camp_members_campId_idx_1810cca2",
+        "table": "camp_members"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"camp_members_campId_idx_1810cca2\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": ["\"public\".\"camp_members_campId_idx_1810cca2\""]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"camp_members_campId_idx_1810cca2\"",
+        "sql": "CREATE INDEX \"camp_members_campId_idx_1810cca2\" ON \"public\".\"camp_members\" (\"campId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"camp_members_campId_idx_1810cca2\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": ["\"public\".\"camp_members_campId_idx_1810cca2\""]
+      }
+    ]
+  },
+  {
+    "id": "index.camp_members.camp_members_memberId_idx_76b3c263",
+    "label": "Create index \"camp_members_memberId_idx_76b3c263\" on \"camp_members\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "camp_members_memberId_idx_76b3c263",
+        "table": "camp_members"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"camp_members_memberId_idx_76b3c263\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": ["\"public\".\"camp_members_memberId_idx_76b3c263\""]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"camp_members_memberId_idx_76b3c263\"",
+        "sql": "CREATE INDEX \"camp_members_memberId_idx_76b3c263\" ON \"public\".\"camp_members\" (\"memberId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"camp_members_memberId_idx_76b3c263\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": ["\"public\".\"camp_members_memberId_idx_76b3c263\""]
+      }
+    ]
+  },
+  {
+    "id": "index.camps.camps_creatorId_idx_3a77d800",
+    "label": "Create index \"camps_creatorId_idx_3a77d800\" on \"camps\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "camps_creatorId_idx_3a77d800",
+        "table": "camps"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"camps_creatorId_idx_3a77d800\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": ["\"public\".\"camps_creatorId_idx_3a77d800\""]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"camps_creatorId_idx_3a77d800\"",
+        "sql": "CREATE INDEX \"camps_creatorId_idx_3a77d800\" ON \"public\".\"camps\" (\"creatorId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"camps_creatorId_idx_3a77d800\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": ["\"public\".\"camps_creatorId_idx_3a77d800\""]
+      }
+    ]
+  },
+  {
+    "id": "index.camps.camps_gameId_idx_6cdb47f8",
+    "label": "Create index \"camps_gameId_idx_6cdb47f8\" on \"camps\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "camps_gameId_idx_6cdb47f8",
+        "table": "camps"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"camps_gameId_idx_6cdb47f8\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": ["\"public\".\"camps_gameId_idx_6cdb47f8\""]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"camps_gameId_idx_6cdb47f8\"",
+        "sql": "CREATE INDEX \"camps_gameId_idx_6cdb47f8\" ON \"public\".\"camps\" (\"gameId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"camps_gameId_idx_6cdb47f8\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": ["\"public\".\"camps_gameId_idx_6cdb47f8\""]
+      }
+    ]
+  },
+  {
+    "id": "index.game_camp_saves.game_camp_saves_campId_idx_1810cca2",
+    "label": "Create index \"game_camp_saves_campId_idx_1810cca2\" on \"game_camp_saves\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "game_camp_saves_campId_idx_1810cca2",
+        "table": "game_camp_saves"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"game_camp_saves_campId_idx_1810cca2\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": ["\"public\".\"game_camp_saves_campId_idx_1810cca2\""]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"game_camp_saves_campId_idx_1810cca2\"",
+        "sql": "CREATE INDEX \"game_camp_saves_campId_idx_1810cca2\" ON \"public\".\"game_camp_saves\" (\"campId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"game_camp_saves_campId_idx_1810cca2\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": ["\"public\".\"game_camp_saves_campId_idx_1810cca2\""]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.camp_members.camp_members_campId_fkey",
+    "label": "Add foreign key \"camp_members_campId_fkey\" on \"camp_members\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "camp_members_campId_fkey",
+        "table": "camp_members"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"camp_members_campId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "camp_members_campId_fkey",
+          "public",
+          "\"public\".\"camp_members\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"camp_members_campId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"camp_members\"\nADD CONSTRAINT \"camp_members_campId_fkey\"\nFOREIGN KEY (\"campId\")\nREFERENCES \"public\".\"camps\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"camp_members_campId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "camp_members_campId_fkey",
+          "public",
+          "\"public\".\"camp_members\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.camp_members.camp_members_memberId_fkey",
+    "label": "Add foreign key \"camp_members_memberId_fkey\" on \"camp_members\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "camp_members_memberId_fkey",
+        "table": "camp_members"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"camp_members_memberId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "camp_members_memberId_fkey",
+          "public",
+          "\"public\".\"camp_members\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"camp_members_memberId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"camp_members\"\nADD CONSTRAINT \"camp_members_memberId_fkey\"\nFOREIGN KEY (\"memberId\")\nREFERENCES \"public\".\"users\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"camp_members_memberId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "camp_members_memberId_fkey",
+          "public",
+          "\"public\".\"camp_members\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.camps.camps_gameId_fkey",
+    "label": "Add foreign key \"camps_gameId_fkey\" on \"camps\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "camps_gameId_fkey",
+        "table": "camps"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"camps_gameId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": ["camps_gameId_fkey", "public", "\"public\".\"camps\""]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"camps_gameId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"camps\"\nADD CONSTRAINT \"camps_gameId_fkey\"\nFOREIGN KEY (\"gameId\")\nREFERENCES \"public\".\"games\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"camps_gameId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": ["camps_gameId_fkey", "public", "\"public\".\"camps\""]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.camps.camps_creatorId_fkey",
+    "label": "Add foreign key \"camps_creatorId_fkey\" on \"camps\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "camps_creatorId_fkey",
+        "table": "camps"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"camps_creatorId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": ["camps_creatorId_fkey", "public", "\"public\".\"camps\""]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"camps_creatorId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"camps\"\nADD CONSTRAINT \"camps_creatorId_fkey\"\nFOREIGN KEY (\"creatorId\")\nREFERENCES \"public\".\"users\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"camps_creatorId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": ["camps_creatorId_fkey", "public", "\"public\".\"camps\""]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.game_camp_saves.game_camp_saves_campId_fkey",
+    "label": "Add foreign key \"game_camp_saves_campId_fkey\" on \"game_camp_saves\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "game_camp_saves_campId_fkey",
+        "table": "game_camp_saves"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"game_camp_saves_campId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "game_camp_saves_campId_fkey",
+          "public",
+          "\"public\".\"game_camp_saves\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"game_camp_saves_campId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"game_camp_saves\"\nADD CONSTRAINT \"game_camp_saves_campId_fkey\"\nFOREIGN KEY (\"campId\")\nREFERENCES \"public\".\"camps\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"game_camp_saves_campId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "game_camp_saves_campId_fkey",
+          "public",
+          "\"public\".\"game_camp_saves\""
+        ]
+      }
+    ]
+  }
+]

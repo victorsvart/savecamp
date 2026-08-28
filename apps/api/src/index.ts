@@ -4,7 +4,8 @@ import { cors } from "hono/cors";
 import type { AppId } from "@savecamp/types";
 import { savesRoutes } from "./domains/saves/routes.js";
 import { error } from "./lib/http.js";
-import { apiAuth } from "./middleware/auth.js";
+// import { apiAuth } from "./middleware/auth.js";
+import { gameRoutes } from "./domains/games/routes.js";
 
 export const APP_ID: AppId = "api";
 
@@ -22,8 +23,9 @@ app.use(
     allowMethods: ["GET", "POST", "OPTIONS"],
   })
 );
-app.use("/v1/saves/*", apiAuth);
+// app.use("/v1/saves/*", apiAuth);
 app.route("/v1/saves", savesRoutes);
+app.route("/v1/games", gameRoutes);
 
 app.onError((err, c) => {
   console.error(err);
